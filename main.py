@@ -94,24 +94,18 @@ Strategy = {
 
 
 def motivation_one():
-    # 获取当前时间信息
     global data_count
     current_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
-    # 创建实验文件夹和日志文件名
     experiment_folder = f"Test/experiment_{current_time}"
     log_file_name = "experiment_log.txt"
     log_file_path = os.path.join(experiment_folder, log_file_name)
     if not os.path.exists(experiment_folder):
         os.makedirs(experiment_folder)
-    # 设置日志
     log = setup_logging(log_file_path)
 
     try:
-        # 在这里执行你的实验代码
-
-        # 记录一些日志信息
-        log.info("实验开始")
+        log.info("start")
         SM1 = Manager()
         SM2 = Manager()
 
@@ -130,67 +124,57 @@ def motivation_one():
         SM2.init_edge_server_cache(cache)
         data_count = 1
 
-        log.info(f"{'基于热度去重：'}")
         latency, cloud_time = SM2.TestLatency(request_list)
         data_num = SM2.total_data_num()
         strategy, decision_time = SM2.hot_aware_deduplicate_with_cover(0)
         dedup_count = SM2.strategy_execute(strategy)
         latency_dedup, cloud_time_dedup = SM2.TestLatency(request_list)
-        log.info(f"{'去重前访问延迟：'}{latency}")
-        log.info(f'去重前云获取次数：{cloud_time}')
-        log.info(f"{'去重后访问延迟：'}{latency_dedup}")
-        log.info(f'去重后云获取次数：{cloud_time_dedup}')
-        log.info(f'去重决策时间：{decision_time}')
-        log.info(f"{'延迟增量：'}{latency_dedup - latency}")
-        log.info(f"{'去重前数据量：'} {data_num}")
-        log.info(f"{'去重数据量：'}{dedup_count}")
-        log.info(f"{'去重率'}{dedup_count / data_num}")
+        log.info(f"{latency}")
+        log.info(f'{cloud_time}')
+        log.info(f"{latency_dedup}")
+        log.info(f'{cloud_time_dedup}')
+        log.info(f'{decision_time}')
+        log.info(f"{latency_dedup - latency}")
+        log.info(f"{data_num}")
+        log.info(f"{dedup_count}")
+        log.info(f"{dedup_count / data_num}")
 
-        log.info(f"{'随机去重：'}")
         latency, cloud_time = SM1.TestLatency(request_list)
         data_num = SM1.total_data_num()
         strategy = SM1.random_deduplicate_with_cover(0)
         dedup_count = SM1.strategy_execute(strategy)
         latency_dedup, cloud_time_dedup = SM1.TestLatency(request_list)
-        log.info(f"{'去重前访问延迟：'}{latency}")
-        log.info(f'去重前云获取次数：{cloud_time}')
-        log.info(f"{'去重后访问延迟：'}{latency_dedup}")
-        log.info(f'去重后云获取次数：{cloud_time_dedup}')
-        log.info(f"{'延迟增量：'}{latency_dedup - latency}")
-        log.info(f"{'去重前数据量：'} {data_num}")
-        log.info(f"{'去重数据量：'}{dedup_count}")
-        log.info(f"{'去重率'}{dedup_count / data_num}")
+        log.info(f"{latency}")
+        log.info(f'{cloud_time}')
+        log.info(f"{latency_dedup}")
+        log.info(f'{cloud_time_dedup}')
+        log.info(f'{decision_time}')
+        log.info(f"{latency_dedup - latency}")
+        log.info(f"{data_num}")
+        log.info(f"{dedup_count}")
+        log.info(f"{dedup_count / data_num}")
 
-        # 结束实验时关闭日志
-        log.info("实验结束")
+        log.info("end")
 
     except Exception as e:
-        # 如果发生异常，记录错误信息
-        log.error(f"发生异常: {e}", exc_info=True)
+        log.error(f"{e}", exc_info=True)
     finally:
-        # 关闭日志记录器，确保所有日志都被写入文件
         logging.shutdown()
 
 
 def BEDD():
-    # 获取当前时间信息
     global data_count
     current_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
-    # 创建实验文件夹和日志文件名
     experiment_folder = f"Test/experiment_{current_time}"
     log_file_name = "experiment_log.txt"
     log_file_path = os.path.join(experiment_folder, log_file_name)
     if not os.path.exists(experiment_folder):
         os.makedirs(experiment_folder)
-    # 设置日志
     log = setup_logging(log_file_path)
 
     try:
-        # 在这里执行你的实验代码
-
-        # 记录一些日志信息
-        log.info("实验开始")
+        log.info("start")
         SM = Manager()
         # generate_data_request_unbalanced(2000, SM1.ServerNum,f'request_unbalanced{SM1.ServerNum}.csv')
         request_list = pd.read_csv(f'{trace_folder}/request_{TestConf.NODENUM}.csv')
@@ -211,170 +195,38 @@ def BEDD():
         strategy, decision_time = SM.balence_deduplicate_with_cover(0.1)
         dedup_count = SM.strategy_execute(strategy)
         latency_dedup, cloud_time_dedup = SM.TestLatency(request_list)
-        log.info(f"{'去重前访问延迟：'}{latency}")
-        log.info(f'去重前云获取次数：{cloud_time}')
-        log.info(f"{'去重后访问延迟：'}{latency_dedup}")
-        log.info(f'去重后云获取次数：{cloud_time_dedup}')
-        log.info(f"{'延迟增量：'}{latency_dedup - latency}")
-        log.info(f'去重决策时间：{decision_time}')
-        log.info(f"{'去重前数据量：'} {init_data_num}")
-        log.info(f"{'去重数据量：'}{dedup_count}")
-        log.info(f"{'最大去重率'}{(init_data_num - data_kind) / init_data_num}")
-        log.info(f"{'去重率'}{dedup_count / init_data_num}")
+        log.info(f"{latency}")
+        log.info(f'{cloud_time}')
+        log.info(f"{latency_dedup}")
+        log.info(f'{cloud_time_dedup}')
+        log.info(f"{latency_dedup - latency}")
+        log.info(f'{decision_time}')
+        log.info(f"{init_data_num}")
+        log.info(f"{dedup_count}")
+        log.info(f"{(init_data_num - data_kind) / init_data_num}")
+        log.info(f"{dedup_count / init_data_num}")
 
-        # 结束实验时关闭日志
-        log.info("实验结束")
-
-    except Exception as e:
-        # 如果发生异常，记录错误信息
-        log.error(f"发生异常: {e}", exc_info=True)
-    finally:
-        # 关闭日志记录器，确保所有日志都被写入文件
-        logging.shutdown()
-
-
-def global_optima():
-    # 获取当前时间信息
-    global data_count
-    current_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-
-    # 创建实验文件夹和日志文件名
-    experiment_folder = f"Test/experiment_{current_time}"
-    log_file_name = "experiment_log.txt"
-    log_file_path = os.path.join(experiment_folder, log_file_name)
-    if not os.path.exists(experiment_folder):
-        os.makedirs(experiment_folder)
-    # 设置日志
-    log = setup_logging(log_file_path)
-
-    try:
-        # 在这里执行你的实验代码
-
-        # 记录一些日志信息
-        log.info("实验开始")
-        SM = Manager()
-        # generate_data_request_unbalanced(2000, SM1.ServerNum,f'request_unbalanced{SM1.ServerNum}.csv')
-        request_list = pd.read_csv(f'{trace_folder}/request_{TestConf.NODENUM}.csv')
-        # request_list = request_list.iloc[0:TestConf.NODENUM*1000]
-        data_heat_calculate(request_list['data_id'], f'{trace_folder}/dataHot{TestConf.NODENUM}.csv')
-        # server_data_init_with_hot(f'{trace_folder}/dataHot{TestConf.NODENUM}.csv', TestConf.NODENUM, f'{trace_folder}/cache_init{TestConf.NODENUM}.json')
-        data_file = f"{trace_folder}/cache_init{TestConf.NODENUM}.json"
-
-        with open(data_file, 'r') as file:
-            cache = json.load(file, object_hook=json_load_hook)
-        SM.install(cache['capacity'])
-        init_data_num, data_kind = SM.init_edge_server_cache(cache)
-        data_count = 1
-
-        log.info(f"{'global optima：'}")
-        latency, cloud_time = SM.TestLatency(request_list)
-        data_num = SM.total_data_num()
-        strategy, decision_time = SM.hot_aware_deduplicate_with_cover(0)
-        dedup_count = SM.strategy_execute(strategy)
-        latency_dedup, cloud_time_dedup = SM.TestLatency(request_list)
-        log.info(f"{'去重前访问延迟：'}{latency}")
-        log.info(f'去重前云获取次数：{cloud_time}')
-        log.info(f"{'去重后访问延迟：'}{latency_dedup}")
-        log.info(f'去重后云获取次数：{cloud_time_dedup}')
-        log.info(f"{'延迟增量：'}{latency_dedup - latency}")
-        log.info(f'去重决策时间：{decision_time}')
-        log.info(f"{'去重前数据量：'} {init_data_num}")
-        log.info(f"{'去重数据量：'}{dedup_count}")
-        log.info(f"{'最大去重率'}{(init_data_num - data_kind) / init_data_num}")
-        log.info(f"{'去重率'}{dedup_count / init_data_num}")
-
-        # 结束实验时关闭日志
-        log.info("实验结束")
+        log.info("end")
 
     except Exception as e:
-        # 如果发生异常，记录错误信息
-        log.error(f"发生异常: {e}", exc_info=True)
+        log.error(f" {e}", exc_info=True)
     finally:
-        # 关闭日志记录器，确保所有日志都被写入文件
-        logging.shutdown()
-
-
-def random_dedup():
-    # 获取当前时间信息
-    global data_count
-    current_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-
-    # 创建实验文件夹和日志文件名
-    experiment_folder = f"Test/experiment_{current_time}"
-    log_file_name = "experiment_log.txt"
-    log_file_path = os.path.join(experiment_folder, log_file_name)
-    if not os.path.exists(experiment_folder):
-        os.makedirs(experiment_folder)
-    # 设置日志
-    log = setup_logging(log_file_path)
-
-    try:
-        # 在这里执行你的实验代码
-
-        # 记录一些日志信息
-        log.info("实验开始")
-        SM = Manager()
-        # generate_data_request_unbalanced(2000, SM1.ServerNum,f'request_unbalanced{SM1.ServerNum}.csv')
-        request_list = pd.read_csv(f'{trace_folder}/request_{TestConf.NODENUM}.csv')
-        # request_list = request_list.iloc[0:TestConf.NODENUM * 1000]
-        data_heat_calculate(request_list['data_id'], f'{trace_folder}/dataHot{TestConf.NODENUM}.csv')
-        # server_data_init_with_hot(f'{trace_folder}/dataHot{TestConf.NODENUM}.csv', TestConf.NODENUM,
-        #                           f'{trace_folder}/cache_init{TestConf.NODENUM}.json')
-        data_file = f"{trace_folder}/cache_init{TestConf.NODENUM}.json"
-
-        with open(data_file, 'r') as file:
-            cache = json.load(file, object_hook=json_load_hook)
-        SM.install(cache['capacity'])
-        init_data_num, data_kind = SM.init_edge_server_cache(cache)
-        data_count = 1
-
-        log.info(f"{'random dedup：'}")
-        latency, cloud_time = SM.TestLatency(request_list)
-        data_num = SM.total_data_num()
-        strategy, decision_time = SM.random_deduplicate_with_cover(0.1)
-        dedup_count = SM.strategy_execute(strategy)
-        latency_dedup, cloud_time_dedup = SM.TestLatency(request_list)
-        log.info(f"{'去重前访问延迟：'}{latency}")
-        log.info(f'去重前云获取次数：{cloud_time}')
-        log.info(f"{'去重后访问延迟：'}{latency_dedup}")
-        log.info(f'去重后云获取次数：{cloud_time_dedup}')
-        log.info(f"{'延迟增量：'}{latency_dedup - latency}")
-        log.info(f'去重决策时间：{decision_time}')
-        log.info(f"{'去重前数据量：'} {init_data_num}")
-        log.info(f"{'去重数据量：'}{dedup_count}")
-        log.info(f"{'最大去重率'}{(init_data_num - data_kind) / init_data_num}")
-        log.info(f"{'去重率'}{dedup_count / init_data_num}")
-
-        # 结束实验时关闭日志
-        log.info("实验结束")
-
-    except Exception as e:
-        # 如果发生异常，记录错误信息
-        log.error(f"发生异常: {e}", exc_info=True)
-    finally:
-        # 关闭日志记录器，确保所有日志都被写入文件
         logging.shutdown()
 
 
 def long_timestamp_test():
-    # 获取当前时间信息
     global data_count
     current_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
-    # 创建实验文件夹和日志文件名
     experiment_folder = f"Test/Strategy{TestConf.DEDUPLICATE_STRATEGY}_{current_time}"
     log_file_name = f"Server{TestConf.NODENUM}_{Strategy[TestConf.DEDUPLICATE_STRATEGY]}_hoplimit{ServerConf.HOP_NUM}_degree{GraphConfig.DEGREE}.txt"
     log_file_path = os.path.join(experiment_folder, log_file_name)
     if not os.path.exists(experiment_folder):
         os.makedirs(experiment_folder)
-    # 设置日志
     log = setup_logging(log_file_path)
 
     try:
-        # 在这里执行实验代码
-
-        # 记录一些日志信息
-        log.info("实验开始")
+        log.info("start")
 
         timestamp_num = 1
         serial_latency = []
@@ -424,17 +276,17 @@ def long_timestamp_test():
                     total_dedup_commu_time += item
                 if key in index_maintain_comm_type:
                     index_maintain_comm_time += item
-            log.info(f"{'去重前访问延迟：'}{latency}")
-            log.info(f'去重前云获取次数：{cloud_time}')
-            log.info(f"{'去重后访问延迟：'}{latency_dedup}")
-            log.info(f'去重后云获取次数：{cloud_time_dedup}')
-            log.info(f"{'edge 访问延迟：'}{edge_average_latency_dedup}")
-            log.info(f"{'延迟增量：'}{latency_dedup - latency}")
-            log.info(f'去重决策时间：{decision_time}')
-            log.info(f"{'去重前数据量：'} {init_data_num}")
-            log.info(f"{'去重数据量：'}{dedup_count}")
-            log.info(f"{'最大去重率'}{(init_data_num - data_kind) / init_data_num}")
-            log.info(f"{'去重率'}{dedup_count / init_data_num}")
+            log.info(f"{latency}")
+            log.info(f'{cloud_time}')
+            log.info(f"{latency_dedup}")
+            log.info(f'{cloud_time_dedup}')
+            log.info(f"{edge_average_latency_dedup}")
+            log.info(f"{latency_dedup - latency}")
+            log.info(f'{decision_time}')
+            log.info(f"{init_data_num}")
+            log.info(f"{dedup_count}")
+            log.info(f"{(init_data_num - data_kind) / init_data_num}")
+            log.info(f"{dedup_count / init_data_num}")
             log.info(f'total dedup communication times: {total_dedup_commu_time}')
             log.info(f'communication times per dedup data:{total_dedup_commu_time / dedup_count}')
             log.info(f'index maintain communication times per dedup data:{index_maintain_comm_time / dedup_count}')
@@ -448,131 +300,27 @@ def long_timestamp_test():
         log.info(f'average dedup ratio is {sum(dedup_ratio) / len(dedup_ratio)}')
         log.info(f'average communication times is {sum(comunication_times) / len(comunication_times)}')
         log.info(f'average max dedup ratio is {sum(max_dedup_ratio) / len(max_dedup_ratio)}')
-        # 结束实验时关闭日志
-        log.info("实验结束")
+        log.info("end")
 
     except Exception as e:
-        # 如果发生异常，记录错误信息
-        log.error(f"发生异常: {e}", exc_info=True)
+        log.error(f"{e}", exc_info=True)
     finally:
-        # 关闭日志记录器，确保所有日志都被写入文件
         logging.shutdown()
 
-
-def global_time_test():
-    # 获取当前时间信息
-    global data_count
-    current_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-
-    # 创建实验文件夹和日志文件名
-    experiment_folder = f"Test/Strategy{TestConf.DEDUPLICATE_STRATEGY}_{current_time}"
-    log_file_name = f"Server{TestConf.NODENUM}_{Strategy[TestConf.DEDUPLICATE_STRATEGY]}_hoplimit{ServerConf.HOP_NUM}_degree{GraphConfig.DEGREE}.txt"
-    log_file_path = os.path.join(experiment_folder, log_file_name)
-    if not os.path.exists(experiment_folder):
-        os.makedirs(experiment_folder)
-    # 设置日志
-    log = setup_logging(log_file_path)
-
-    try:
-        # 在这里执行实验代码
-
-        # 记录一些日志信息
-        log.info("实验开始")
-        trace_folder = f"D:\MemcacheTrace\\Time_test\\{TestConf.NODENUM}server_trace"
-        total_decision_time = 0
-        for i in range(0, 5):
-            log.info(f"---------------exp {i}---------------")
-            SM = Manager()
-            cache = server_data_init_random(TestConf.DATANUM, TestConf.NODENUM,
-                                    f'{trace_folder}/cache_init{TestConf.NODENUM}_{TestConf.DATANUM}.json')
-            data_file = f'{trace_folder}/cache_init{TestConf.NODENUM}_{TestConf.DATANUM}.json'
-
-            # with open(data_file, 'r') as file:
-            #     cache = json.load(file, object_hook=json_load_hook)
-            SM.install(cache['capacity'])
-            init_data_num, data_kind = SM.init_edge_server_cache(cache)
-            if TestConf.DEDUPLICATE_STRATEGY == 0 or TestConf.DEDUPLICATE_STRATEGY == 3:
-                strategy, decision_time = SM.data_dedup()
-                total_decision_time += decision_time
-        log.info(f'去重决策时间：{total_decision_time/5}')
-        # 结束实验时关闭日志
-        log.info("实验结束")
-
-    except Exception as e:
-        # 如果发生异常，记录错误信息
-        log.error(f"发生异常: {e}", exc_info=True)
-    finally:
-        # 关闭日志记录器，确保所有日志都被写入文件
-        logging.shutdown()
-
-def test_latency():
-    global data_count
-    current_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-
-    # 创建实验文件夹和日志文件名
-    experiment_folder = f"Test/experiment_{current_time}"
-    log_file_name = "experiment_log.txt"
-    log_file_path = os.path.join(experiment_folder, log_file_name)
-    if not os.path.exists(experiment_folder):
-        os.makedirs(experiment_folder)
-    # 设置日志
-    log = setup_logging(log_file_path)
-
-    try:
-        # 在这里执行实验代码
-
-        # 记录一些日志信息
-        log.info("实验开始")
-        SM = Manager()
-        # generate_data_request_unbalanced(2000, SM.ServerNum,f'request_unbalanced{SM.ServerNum}.csv')
-        request_list = pd.read_csv(f'./request_unbalanced{SM.ServerNum}.csv')
-        # data_heat_calculate(request_list['data_id'],f'dataHot{SM.ServerNum}.csv')
-        # server_data_init_with_hot(f'./dataHot{SM.ServerNum}.csv', SM.ServerNum,f'cache_init{SM.ServerNum}.json')
-
-        data_file = f"./cache_init{SM.ServerNum}.json"
-        with open(data_file, 'r') as file:
-            cache = json.load(file, object_hook=json_load_hook)
-        SM.install(cache['capacity'])
-        SM.init_edge_server_cache(cache)
-        request_list = pd.read_csv('request_10.csv')
-        latency, cloud_time = SM.TestLatency(request_list)
-        count = nutil.counter.get_count()
-        for key, item in count.items():
-            if key == 'total_delete':
-                continue
-            log.info(f'{key} communication times :{item}')
-        log.info(f'latency is {latency}')
-        # 结束实验时关闭日志
-
-        log.info("实验结束")
-
-    except Exception as e:
-        # 如果发生异常，记录错误信息
-        log.error(f"发生异常: {e}", exc_info=True)
-    finally:
-        # 关闭日志记录器，确保所有日志都被写入文件
-        logging.shutdown()
 
 
 def motivation_two():
-    # 获取当前时间信息
     global data_count
     current_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
-    # 创建实验文件夹和日志文件名
     experiment_folder = f"Test/experiment_{current_time}"
     log_file_name = f"Server{TestConf.NODENUM}_{Strategy[TestConf.DEDUPLICATE_STRATEGY]}_hoplimit{ServerConf.HOP_NUM}_degree{GraphConfig.DEGREE}.txt"
     log_file_path = os.path.join(experiment_folder, log_file_name)
     if not os.path.exists(experiment_folder):
         os.makedirs(experiment_folder)
-    # 设置日志
     log = setup_logging(log_file_path)
 
     try:
-        # 在这里执行实验代码
-
-        # 记录一些日志信息
-        log.info("实验开始")
         SM = Manager()
         # generate_data_request_unbalanced(2000, SM.ServerNum,f'request_unbalanced{SM.ServerNum}.csv')
         request_list = pd.read_csv(f'{trace_folder}/request_{TestConf.NODENUM}.csv')
@@ -616,37 +364,25 @@ def motivation_two():
         log.info(f"{'max dedup rate is '}{(init_data_num - data_kind) / init_data_num}")
         log.info(f'total dedup communication times: {total_dedup_commu_time}')
         log.info(f'communication times per dedup data:{total_dedup_commu_time / total_dedup_count}')
-        # 结束实验时关闭日志
-
-        log.info("实验结束")
 
     except Exception as e:
-        # 如果发生异常，记录错误信息
-        log.error(f"发生异常: {e}", exc_info=True)
+        log.error(f"{e}", exc_info=True)
     finally:
-        # 关闭日志记录器，确保所有日志都被写入文件
         logging.shutdown()
 
 
 def main_experiment():
-    # 获取当前时间信息
     global data_count
     current_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
-    # 创建实验文件夹和日志文件名
     experiment_folder = f"Test/experiment_{current_time}"
     log_file_name = "experiment_log.txt"
     log_file_path = os.path.join(experiment_folder, log_file_name)
     if not os.path.exists(experiment_folder):
         os.makedirs(experiment_folder)
-    # 设置日志
     log = setup_logging(log_file_path)
 
     try:
-        # 在这里执行实验代码
-
-        # 记录一些日志信息
-        log.info("实验开始")
         SM = Manager()
         # generate_data_request_unbalanced(2000, SM.ServerNum,f'request_unbalanced{SM.ServerNum}.csv')
         request_list = pd.read_csv(f'./request_unbalanced.csv')
@@ -701,14 +437,10 @@ def main_experiment():
         log.info(f'total dedup communication times: {total_dedup_commu_time}')
         log.info(f'communication times per dedup data:{total_dedup_commu_time / count["total_delete"]}')
 
-        # 结束实验时关闭日志
-        log.info("实验结束")
 
     except Exception as e:
-        # 如果发生异常，记录错误信息
-        log.error(f"发生异常: {e}", exc_info=True)
+        log.error(f"{e}", exc_info=True)
     finally:
-        # 关闭日志记录器，确保所有日志都被写入文件
         logging.shutdown()
 
 
