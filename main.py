@@ -22,7 +22,6 @@ from util.request_generator import generate_data_request_unbalanced, server_data
 TestConf = oc.structured(config.TestConfig)
 ServerConf = oc.structured(config.ServerConfig)
 
-# trace_folder = f"D:/MemcacheTrace/trace"
 trace_folder = "./"
 
 basic_disdedup_comm_type = [
