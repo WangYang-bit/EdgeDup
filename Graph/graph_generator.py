@@ -102,7 +102,6 @@ class GraphGenerator:
         station_num = len(data)
         adj = [[0 for i in range(station_num)] for j in range(station_num)]
         degree = [0 for i in range(station_num)]
-        # 求出最近的max_link个的id
         edgeNum = 0
         for i in range(station_num):
             edge_i = data.iloc[i].tolist()[i + 1:station_num]
