@@ -405,7 +405,6 @@ class Manager:
             servers = server_with_data[data_id]
             if len(servers) <= 1:
                 continue
-            # 选择weights最高的服务器
             # save_server_id = servers[server_data_weight[data_id].index(max(server_data_weight[data_id]))]
             indices = np.random.choice(range(len(servers)), 1, replace=False)
             save_server_id = [servers[i] for i in indices]
@@ -426,7 +425,6 @@ class Manager:
 
         for data_id in two_replication_list:
             servers = server_with_data[data_id]
-            # 选择weights最高的两个服务器
             if len(servers) <= 2:
                 continue
             # sorted_indices = sorted(range(len(server_data_weight[data_id])), key=lambda i: server_data_weight[data_id][i], reverse=True)
@@ -451,7 +449,6 @@ class Manager:
 
         for data_id in three_replication_list:
             servers = server_with_data[data_id]
-            # 选择weights最高的三个服务器
             if len(servers) < 3*Per_ten_replica:
                 continue
             sorted_indices = sorted(range(len(server_data_weight[data_id])), key=lambda i: server_data_weight[data_id][i], reverse=True)
@@ -476,7 +473,6 @@ class Manager:
 
         for data_id in full_replication_list:
             servers = server_with_data[data_id]
-            # 选择weights最高的ServerNum/10个服务器
             if len(servers) < 4*Per_ten_replica:
                 continue
             sorted_indices = sorted(range(len(server_data_weight[data_id])),
@@ -536,9 +532,7 @@ class Manager:
             data_hot[data_id] = sum(weights)
 
         sorted_data_hot = sorted(data_hot.items(), key=lambda item: item[1], reverse=True)
-        # 计算前一半的元素数量
         save_length = int(len(sorted_data_hot)*percent)
-        # 获取前一半的键
         top_half_data = [key for key, value in sorted_data_hot[:save_length]]
         for data_id in top_half_data:
             del server_with_data[data_id]
@@ -956,15 +950,3 @@ if __name__ == "__main__":
     SM.install()
     print(SM.get_average_neighbor_num())
     print(SM.netgraph.density())
-    # # SM.netgraph.show(with_label=True)
-    # request_list = pd.read_csv('../request.csv')
-    # log.info('去重前：')
-    # SM.TestLatency(request_list)
-    # SM.random_deduplicate_with_cover()
-    # print('去重后：')
-    # SM.TestLatency(request_list)
-    # unio_set = set()
-    # cover = [1 ,2, 3, 4, 5, 6, 7, 8, 9, 10]
-    # cover2 = [1, 2, 3, 4, 5, 6, 11, 12, 13, 14]
-    # unio_set.update(cover)
-    # unio_set.update(cover2)
