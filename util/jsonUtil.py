@@ -12,5 +12,4 @@ class NpEncoder(json.JSONEncoder):
         return json.JSONEncoder.default(self,obj)
 
 def json_load_hook(dct):
-    # 将字符串键转换为整数键
     return {int(k) if k.isdigit() else k: v for k, v in dct.items()}
