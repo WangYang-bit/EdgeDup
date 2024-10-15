@@ -1,6 +1,5 @@
 class AutoStr:
     def __str__(self):
-        # 获取当前对象的所有属性和值
         attributes = ", ".join(f"{attr}={getattr(self, attr)}" for attr in dir(self) if
                                not callable(getattr(self, attr)) and not attr.startswith("__"))
         return f"{self.__class__.__name__}({attributes})"
