@@ -76,7 +76,7 @@ class ConnectionPool:
     def _get_connection(self):
         # Get a connection from the pool (or create a new one if the pool is empty)
         ## Get connection block mod
-        # connection = self.connections.get()  # 阻塞直到队列中有可用连接
+        # connection = self.connections.get()
         # return connection
         ## Get connection no block mod
         try:
