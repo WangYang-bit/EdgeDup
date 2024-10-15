@@ -15,25 +15,19 @@ show_gurobi_info = 0
 
 
 def solve_set_cover_with_weights(universe, subsets, weights):
-    # 创建模型
     model = gp.Model("set_cover_with_weights")
     model.setParam('OutputFlag', show_gurobi_info)
 
-    # 创建变量，每个集合是否被选择
     x = model.addVars(len(subsets), vtype=GRB.BINARY, name="x")
 
-    # 最小化目标函数：选择的集合权重总和
     model.setObjective(gp.quicksum(weights[i] * x[i] for i in range(len(subsets))), GRB.MINIMIZE)
 
-    # 约束条件：确保每个元素都被覆盖
     for element in universe:
         model.addConstr(gp.quicksum(x[i] for i, subset in enumerate(subsets) if element in subset) >= 1,
                         name='Cover' + str(element))
 
-    # 优化模型
     model.optimize()
 
-    # 打印结果
     if model.status == GRB.OPTIMAL:
         selected_sets = [i for i, var in enumerate(model.getVars()) if var.x > 0.5]
         # log.info("Selected sets:", selected_sets)
@@ -44,27 +38,21 @@ def solve_set_cover_with_weights(universe, subsets, weights):
 
 
 def solve_set_cover_and_max_weights(universe, subsets, weights, dedup_weight=TestConfig.ALPHA):
-    # 创建模型
     model = gp.Model("set_cover_with_weights")
     model.setParam('OutputFlag', show_gurobi_info)
 
-    # 创建变量，每个集合是否被选择
     x = model.addVars(len(subsets), vtype=GRB.BINARY, name="x")
 
     total_weight = gp.quicksum(weights[i] * x[i] for i in range(len(subsets))) / (sum(weights) + 1)
     dedup_rate = gp.quicksum(1 - x[i] for i in range(len(subsets))) / len(subsets)
-    # 最小化目标函数：选择的集合权重总和
     model.setObjective((1 - dedup_weight) * total_weight + dedup_weight * dedup_rate, GRB.MAXIMIZE)
 
-    # 约束条件：确保每个元素都被覆盖
     for element in universe:
         model.addConstr(gp.quicksum(x[i] for i, subset in enumerate(subsets) if element in subset) >= 1,
                         name='Cover' + str(element))
 
-    # 优化模型
     model.optimize()
 
-    # 打印结果
     if model.status == GRB.OPTIMAL:
         selected_sets = [i for i, var in enumerate(model.getVars()) if var.x > 0.5]
         # log.info("Selected sets:", selected_sets)
@@ -75,7 +63,6 @@ def solve_set_cover_and_max_weights(universe, subsets, weights, dedup_weight=Tes
 
 
 # def solve_dedup_space_balance(server_with_data, server_need_data, cover, server_capacity, dedup_weight=0.7):
-#     # 创建模型
 #     model = gp.Model("set_cover_with_weights")
 #     # model.setParam('OutputFlag', show_gurobi_info)
 #
@@ -102,10 +89,8 @@ def solve_set_cover_and_max_weights(universe, subsets, weights, dedup_weight=Tes
 #         for neighbor in server_cover:
 #             coverage[server, neighbor] = 1
 #
-#     # 创建变量，每个数据在哪些服务器上存储
 #     delete_set = model.addVars(len(dedup_data), len(server_capacity), vtype=GRB.BINARY, name="delete_set")
 #     # Oj = model.addVars(len(server_list), vtype=GRB.CONTINUOUS, name="Oj")
-#     # # 约束条件：确保每个元素都被覆盖
 #     # Square_sum_of_Oj = model.addVar(vtype=GRB.CONTINUOUS, name="Square_Oj")
 #     #
 #     # balance_object = model.addVar(vtype=GRB.CONTINUOUS, name="balance_object")
@@ -144,10 +129,8 @@ def solve_set_cover_and_max_weights(universe, subsets, weights, dedup_weight=Tes
 #
 #     model.setObjective( dedup_rate, GRB.MAXIMIZE)
 #     model.write("model.lp")
-#     # 优化模型
 #     model.optimize()
 #
-#     # 打印结果
 #     if model.status == GRB.OPTIMAL:
 #         strategy = {}
 #         for data_id in data_id_hash:
@@ -160,17 +143,13 @@ def solve_set_cover_and_max_weights(universe, subsets, weights, dedup_weight=Tes
 #         return None
 
 def solve_dedup_space_balance(universe, subsets, server_list, remain_data_num, capacity, dedup_weight=0.7):
-    # 创建模型
     model = gp.Model("set_cover_with_weights")
     model.setParam('OutputFlag', show_gurobi_info)
 
-    # 创建变量，每个集合是否被选择
     x = model.addVars(len(server_list), vtype=GRB.BINARY, name="x")
 
     dedup_rate = gp.quicksum(1 - x[i] for i in range(len(server_list))) / len(server_list)
 
-
-    # 约束条件：确保每个元素都被覆盖
     for element in universe:
         model.addConstr(gp.quicksum(x[i] for i, subset in enumerate(subsets) if element in subset) >= 1,
                         name='Cover' + str(element))
@@ -200,12 +179,9 @@ def solve_dedup_space_balance(universe, subsets, server_list, remain_data_num, c
     model.addConstr(balance_object*Sum_of_Squares*len(server_list) == Square_sum_of_Oj, name="balance_object")
 
 
-    # 最小化目标函数：选择的集合权重总和
     model.setObjective((1 - dedup_weight) * balance_object + dedup_weight * dedup_rate, GRB.MAXIMIZE)
-    # 优化模型
     model.optimize()
 
-    # 打印结果
     if model.status == GRB.OPTIMAL:
         selected_sets = []
         result = model.getAttr('x', x)
@@ -229,17 +205,4 @@ def _to_str(element):
 
 
 if __name__ == "__main__":
-    # 示例数据（包括集合权重）
-    universe = [1, 2, 3, 4, 5, 6, 7, 8]
-    subsets = [[1, 3], [2, 3], [1, 2, 3, 4], [3, 4, 5, 6, 7], [4, 5, 7], [4, 6], [4, 5, 7, 8], [7, 8]]
-    # subsets = []
-    weights = [10, 5, 5, 4, 0, 2, 1, 4]
-    # max_value = 6
-    # weights_p = [max_value - x for x in weights]
-    # # weights_p = [1 / (x + 1) * 100 for x in weights]
-    all_set = [0, 1, 2, 3]
-    # 求解带有权重的集合覆盖问题
-    delete_set = solve_set_cover_and_max_weights(universe, subsets, weights)
-    print(delete_set)
-    # delete_set = list(set(all_set) - set(delete_set))
-    # print(delete_set)
+    pass
