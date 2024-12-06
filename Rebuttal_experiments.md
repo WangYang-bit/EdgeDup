@@ -72,3 +72,29 @@ With decision time comparable to MEAN and execution time lower than MEAN, EdgeDu
 
 **Fig.14** The impact of network density on the average LSS and LDS storage space per data item.  
 As network density increases, the average LSS and LDS storage space per data item initially increases and then stabilizes. This occurs because when the network density exceeds 0.28, the number of neighbors for each node tends to approach the total number of servers.
+
+# Section 5: The Impact of Popularity Prediction Bias
+![Fig.15 Impact of Popularity Prediction Bias on Retrieval Latency](https://github.com/WangYang-bit/EdgeDup/blob/main/Figures/Popularity%20Prediction%20Bias%20vs%20Latency.png "Fig.15 Impact of Popularity Prediction Bias on Retrieval Latency")
+
+**Fig.15** The impact of popularity prediction bias on retrieval latency.
+
+![Fig.16 Impact of Popularity Prediction Bias on Deduplication Ratio](https://github.com/WangYang-bit/EdgeDup/blob/main/Figures/Popularity%20Prediction%20Bias%20vs%20Dedup.png "Fig.16 Impact of Popularity Prediction Bias on Deduplication Ratio")
+
+**Fig.16** The impact of popularity prediction bias on the deduplication ratio.
+
+# Section 6: Communication Overhead Analysis between Centralized and Distributed Methods
+![Fig.17 Communication Overhead between Centralized and Distributed Methods](https://github.com/WangYang-bit/EdgeDup/blob/main/Figures/Centralized%20vs%20Distributed%20Communication%20Overhead.png "Fig.17 Communication Overhead between Centralized and Distributed Methods")
+
+**Fig.17** Communication overhead comparison between centralized and distributed methods.
+
+# Section 7: The Impact of Network Density on EdgeDup
+
+| Network Density | Data Retrieval Latency (ms) | Deduplication Ratio (\%) | Communication Overhead (Messages) | 
+| --------------- | --------------------------- | ------------------------ | ---------------------------------- | 
+| 0.3             | 16.04                       | 59.6                     | 782                                | 
+| 0.4             | 12.96                       | 62.1                     | 1885                               | 
+| 0.5             | 11.72                       | 66.1                     | 2435                               | 
+| 0.6             | 11.42                       | 68.6                     | 2604                               | 
+| 0.7             | 11.07                       | 68.5                     | 2634                               | 
+
+**Table 1**: Impact of Network Density on EdgeDup Performance Metrics.
