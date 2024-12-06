@@ -78,14 +78,14 @@ With decision time comparable to MEAN and execution time lower than MEAN, EdgeDu
 **Fig.15** The impact of network density on the average LSS and LDS storage space per data item.  
 As network density increases, the average LSS and LDS storage space per data item initially increases and then stabilizes. This occurs because when the network density exceeds 0.28, the number of neighbors for each node tends to approach the total number of servers.
 
-# Section 5: The Impact of Popularity Prediction Bias
+# Section 5: The Impact of Popularity Prediction Deviation
 ![Fig.16 Impact of Popularity Prediction Bias on Retrieval Latency](https://github.com/WangYang-bit/EdgeDup/blob/main/Figures/Popularity%20Prediction%20Bias%20vs%20Latency.png "Fig.16 Impact of Popularity Prediction Bias on Retrieval Latency")
 
-**Fig.16** The impact of popularity prediction bias on retrieval latency.
+**Fig.16** The impact of popularity prediction deviation on retrieval latency.
 
 ![Fig.17 Impact of Popularity Prediction Bias on Deduplication Ratio](https://github.com/WangYang-bit/EdgeDup/blob/main/Figures/Popularity%20Prediction%20Bias%20vs%20Dedup.png "Fig.17 Impact of Popularity Prediction Bias on Deduplication Ratio")
 
-**Fig.17** The impact of popularity prediction bias on the deduplication ratio.
+**Fig.17** The impact of popularity prediction deviation on the deduplication ratio.
 
 # Section 6: The Impact of Network Density on EdgeDup
 
