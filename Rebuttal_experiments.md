@@ -1,7 +1,7 @@
 # Section 1: Experimental Results in Dynamic Network Scenarios
 
 ## Node Failures
-![Fig.1 Node Failure Probability vs. Deduplication Ratio](Figures/Node Error Rate vs Dedup.png "Fig.1 Node Failure Probability vs. Deduplication Ratio")
+![Fig.1 Node Failure Probability vs. Deduplication Ratio](../Figures/Node Error Rate vs Dedup.png "Fig.1 Node Failure Probability vs. Deduplication Ratio")
 
 **Fig.1** The impact of node failure probability on the deduplication ratio.  
 As the server failure rate in the system increases, the deduplication ratio of each method decreases to some extent. Among them, EdgeDup is least affected.
