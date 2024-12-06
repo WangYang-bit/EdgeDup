@@ -42,7 +42,7 @@ When network disruptions occur between servers, the retrieval latency increases 
 **Fig.8** The effect of network disruptions on the deduplication ratio.  
 Network failures have a relatively minor impact on the overall deduplication ratio.
 
-# Section 2: 中心化与分布式方法的对比
+# Section 2: Comparison between Centralized and Distributed Methods
 
 ![Fig.9 Decision Time of Distributed vs. Centralized Deduplication Methods](https://github.com/WangYang-bit/EdgeDup/blob/main/Figures/Server%20Num%20vs%20decision.png "Fig.9 Decision Time of Distributed vs. Centralized Methods")
 
