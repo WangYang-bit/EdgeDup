@@ -72,16 +72,16 @@ With decision time comparable to MEAN and execution time lower than MEAN, EdgeDu
 
 As network density continues to increase, the communication overhead of centralized deduplication schemes remains unaffected. In contrast, distributed schemes such as EdgeDup experience an increase in communication overhead with rising network density, which eventually stabilizes. This stabilization occurs because, once network density surpasses a certain threshold, nodes can access nearly all edge servers within the system with a delay of 3 HOP_NUM.
 
-# Section 3: The Impact of the Alpha Parameter
-![Fig.13 Alpha Parameter vs. Retrieval Latency](https://github.com/WangYang-bit/EdgeDup/blob/main/Figures/alpha%20vs%20latency.png "Fig.13 Alpha Parameter vs. Retrieval Latency")
+# Section 3: The Impact of the $\alpha$ Parameter
+![Fig.13 $\alpha$ Parameter vs. Retrieval Latency](https://github.com/WangYang-bit/EdgeDup/blob/main/Figures/alpha%20vs%20latency.png "Fig.13 Alpha Parameter vs. Retrieval Latency")
 
-**Fig.13** The effect of the alpha parameter on retrieval latency.
+**Fig.13** The effect of the $\alpha$ parameter on retrieval latency.
 
 ![Fig.14 Alpha Parameter vs. Deduplication Ratio](https://github.com/WangYang-bit/EdgeDup/blob/main/Figures/alpha%20vs%20max_dedup.png "Fig.14 Alpha Parameter vs. Deduplication Ratio")
 
-**Fig.14** The effect of the alpha parameter on deduplication ratio.  
+**Fig.14** The effect of the $\alpha$ parameter on deduplication ratio.  
 
-“Optimal” represents the centralized approach, while “EdgeDup” represents the distributed optimization. As the alpha value increases, greater emphasis is placed on deduplication ratio, resulting in higher deduplication ratio but also higher retrieval latency.
+“Optimal” represents the centralized approach, while “EdgeDup” represents the distributed optimization. As the $\alpha$ value increases, greater emphasis is placed on deduplication ratio, resulting in higher deduplication ratio but also higher retrieval latency.
 
 # Section 4: Index Storage Overhead
 ![Fig.15 Network Density vs. Average LSS and LDS Storage Space](https://github.com/WangYang-bit/EdgeDup/blob/main/Figures/density%20vs%20memory.png "Fig.15 Network Density vs. Average LSS and LDS Storage Space")
@@ -101,7 +101,7 @@ As the deviation in data popularity predictions increases, methods that take dat
 
 **Fig.17** The impact of popularity prediction deviation on the deduplication ratio.
 
-As the deviation in data popularity predictions increases, deduplication rates of methods that consider data popularity also improve. Specifically, MEAN exhibits a more pronounced increase in deduplication rate, while EdgeDup demonstrates a moderate enhancement, though the improvement is not substantial. In contrast, BEDD-O remains unaffected.
+As the deviation in data popularity predictions increases, deduplication ratio of methods that consider data popularity also improve. Specifically, MEAN exhibits a more pronounced increase in deduplication ratio, while EdgeDup demonstrates a moderate enhancement, though the improvement is not substantial. In contrast, BEDD-O remains unaffected.
 
 # Section 6: The Impact of Network Density on EdgeDup
 
