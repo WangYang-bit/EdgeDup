@@ -30,14 +30,14 @@ class NetWorkConfig:
 
 @dataclass
 class TestConfig:
-    NODENUM: int = 10
+    NODENUM: int = 50
     DATANUM: int = 8000
     CACHE_HOT_RATE: float = 0.6
     MAX_DEDUPLICATE_RATE: float = 1
     DIS_DEDUP_RATE: float = 0.0
     ALPHA: float = 0.7
     # 0 : global deduplication, 1: distributed deduplication basic
-    # 2:distributed deduplication dependency 3: BEDD
+    # 2:distributed deduplication dependency 3: Ripple
     # 4:Random  5:real_random 6:MEAN 7:LDI 8:CDI
     DEDUPLICATE_STRATEGY: int = 2
     DEDUPLICATE_MOD: int = 1  # 0 for simple mod and 1 for dependency mod
