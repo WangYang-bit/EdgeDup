@@ -1,2 +1,2 @@
 # EdgeDup
-The official implementation of "EdgeDup: Data Popularity-aware Decentralized Data Deduplication at the Edge".
+The official implementation of "EdgeDup: Data Popularity-aware Communication-efficient Decentralized Data Deduplication at the Edge".
